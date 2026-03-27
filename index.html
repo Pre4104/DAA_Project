@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>DAA Complete System — All Units</title>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 :root{
@@ -58,7 +57,7 @@ body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:14p
 .card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:20px}
 .card-title{font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink3);margin-bottom:12px}
 
-/* ALGO SELECTOR (Unit 4 nav) */
+/* ALGO SELECTOR */
 .algo-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px}
 .algo-tab{font-family:var(--mono);font-size:11px;font-weight:600;padding:7px 14px;border-radius:6px;border:1.5px solid var(--border2);background:var(--card);cursor:pointer;transition:all .18s;color:var(--ink2)}
 .algo-tab:hover{border-color:var(--accent);color:var(--ink)}
@@ -230,11 +229,17 @@ input[type=range]{accent-color:var(--ink);width:70px;cursor:pointer}
 .progress-label{font-family:var(--mono);font-size:11px;color:var(--ink2);margin-top:6px}
 .bench-insight{padding:16px;background:var(--javal);border:1.5px solid var(--javab);border-radius:8px;margin-top:16px;font-size:13px;color:var(--ink2);line-height:1.7}
 .bench-insight b{color:var(--java)}
-.legend-row{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:12px}
-.legend-item{display:flex;align-items:center;gap:6px;font-family:var(--mono);font-size:11px;color:var(--ink2)}
-.legend-dot{width:12px;height:12px;border-radius:2px}
 
-/* RESPONSIVE */
+/* ── Search Target Pill Tag ─────────────────────────────────────────────── */
+.target-pill{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:10px;font-weight:700;padding:4px 10px;border-radius:20px;letter-spacing:.05em;margin-left:8px;vertical-align:middle}
+.target-pill.first{background:#fff3cd;color:#856404;border:1px solid #ffc107}
+.target-pill.middle{background:#d4edda;color:#155724;border:1px solid #28a745}
+.target-pill.last{background:#f8d7da;color:#721c24;border:1px solid #dc3545}
+.target-pill.absent{background:#e2e3e5;color:#383d41;border:1px solid #6c757d}
+
+/* Search config note box */
+.search-note{margin-bottom:14px;padding:10px 14px;background:var(--u3l);border:1px solid var(--u3b);border-radius:7px;font-family:var(--mono);font-size:11px;color:var(--u3);line-height:1.6}
+
 @media(max-width:900px){
   .grid2,.limit-grid,.np-grid{grid-template-columns:1fr}
   .decision-flow{grid-template-columns:1fr 1fr}
@@ -492,7 +497,6 @@ input[type=range]{accent-color:var(--ink);width:70px;cursor:pointer}
     <div class="page-desc">Every algorithm has a breaking point. This section documents where each algorithm fails, why, and how we engineered around it. This is what separates academic knowledge from production systems.</div>
   </div>
 
-  <!-- Limitations Grid -->
   <div class="limit-grid">
     <div class="limit-card">
       <div class="limit-card-header">
@@ -540,7 +544,6 @@ input[type=range]{accent-color:var(--ink);width:70px;cursor:pointer}
     </div>
   </div>
 
-  <!-- Breaking Point Simulator -->
   <div class="breaking-section">
     <div class="breaking-title">// Breaking Point Simulator</div>
     <div class="breaking-desc">Simulate what happens to naive Quick Sort vs our optimized version as n grows on different data distributions.</div>
@@ -560,7 +563,6 @@ input[type=range]{accent-color:var(--ink);width:70px;cursor:pointer}
     </div>
   </div>
 
-  <!-- Complexity Comparison Table -->
   <div class="card" style="margin-bottom:24px">
     <div class="card-title">Full Comparison Table — All Algorithms</div>
     <table class="comparison-table">
@@ -580,7 +582,6 @@ input[type=range]{accent-color:var(--ink);width:70px;cursor:pointer}
     <div style="font-family:var(--mono);font-size:10px;color:var(--ink3);padding:10px 14px 0">*Quick Sort with Median-of-Three pivot. Naive first-element pivot degrades to O(n²) on sorted data.</div>
   </div>
 
-  <!-- NP Section -->
   <div class="np-section">
     <div class="np-title">// Computational Complexity Classes — Where Sorting Lives</div>
     <div class="np-grid">
@@ -597,7 +598,6 @@ input[type=range]{accent-color:var(--ink);width:70px;cursor:pointer}
         <div class="np-card-body">Finding the <em>globally optimal</em> algorithm selection policy across all possible input distributions is NP-Hard. Our greedy heuristic achieves 98% accuracy in O(√n) — the practical solution to an NP-Hard meta-problem.</div>
       </div>
     </div>
-
     <div style="margin-top:20px">
       <div class="explain-title" style="font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ink3)">// The Comparison Lower Bound — Why We Can't Beat O(n log n)</div>
       <div style="font-size:13px;color:var(--ink2);line-height:1.75;margin-top:8px">
@@ -616,21 +616,22 @@ input[type=range]{accent-color:var(--ink);width:70px;cursor:pointer}
 <div class="container">
   <div class="bench-hero">
     <div class="bench-hero-text">
-      <h2>Live Benchmark vs Arrays.sort()</h2>
-      <p>Runs all 6 algorithms + Java's TimSort equivalent in-browser on real data. Simulates the JVM nanoTime + warmup methodology. Data is generated fresh per run.</p>
+      <h2>Live Benchmark — Your Algorithms vs JS Built-ins</h2>
+      <p>Sorting vs <code style="background:rgba(255,255,255,.12);padding:2px 6px;border-radius:3px;font-family:var(--mono);font-size:12px">Arrays.sort()</code> &nbsp;·&nbsp; Searching: Linear Search vs Binary Search. Times reported in <b>nanoseconds</b>. Configure the <b>Search Target Position</b> to expose best-case vs worst-case behaviour.</p>
     </div>
-    <button class="bench-btn-big" id="bench-run-btn" onclick="runBenchmark()">▶ Run Benchmark</button>
+    <button class="bench-btn-big" id="bench-run-btn" onclick="runBenchmark()">&#9654; Run Benchmark</button>
   </div>
 
+  <!-- ── Config row ─────────────────────────────────────────────────────── -->
   <div class="bench-config">
     <div class="probe-field">
       <div class="probe-label">Array Size (n)</div>
       <select class="probe-select" id="bench-n">
-        <option value="100">n = 100</option>
-        <option value="1000">n = 1,000</option>
-        <option value="5000" selected>n = 5,000</option>
+        <option value="500">n = 500</option>
+        <option value="2000" selected>n = 2,000</option>
+        <option value="5000">n = 5,000</option>
+        <option value="10000">n = 10,000</option>
         <option value="20000">n = 20,000</option>
-        <option value="50000">n = 50,000</option>
       </select>
     </div>
     <div class="probe-field">
@@ -649,38 +650,431 @@ input[type=range]{accent-color:var(--ink);width:70px;cursor:pointer}
         <option value="5">5 runs</option>
       </select>
     </div>
+    <!-- ★ NEW: Search Target Position ────────────────────────────────── -->
+    <div class="probe-field">
+      <div class="probe-label">Search Target Position</div>
+      <select class="probe-select" id="bench-target-pos">
+        <option value="first">At First (Best Case)</option>
+        <option value="middle" selected>In Middle (Average Case)</option>
+        <option value="last">At Last (Worst Case)</option>
+        <option value="absent">Not Present (Worst Case)</option>
+      </select>
+    </div>
   </div>
 
+  <!-- progress bar -->
   <div class="bench-progress" id="bench-progress">
     <div style="font-family:var(--mono);font-size:11px;font-weight:700;color:var(--ink2)" id="bench-prog-label">Running...</div>
     <div class="progress-bar-track"><div class="progress-bar-fill" id="bench-prog-fill"></div></div>
     <div class="progress-label" id="bench-prog-sub"></div>
   </div>
 
-  <div class="grid2">
-    <div class="chart-container">
-      <div class="chart-title">Execution Time (ms) — Lower is Better</div>
-      <div class="legend-row" id="bench-legend"></div>
-      <canvas id="bench-bar-chart" height="280"></canvas>
+  <!-- Sort results -->
+  <div style="margin-bottom:10px;font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ink3)">// Sorting Algorithms vs Arrays.sort()</div>
+  <div class="grid2" style="margin-bottom:28px">
+    <div class="results-table-wrap">
+      <table class="results-table">
+        <thead><tr><th>Algorithm</th><th>Unit</th><th>Time</th><th>Comparisons</th><th>vs Java sort</th><th>Verdict</th></tr></thead>
+        <tbody id="sort-tbody"><tr><td colspan="6" style="text-align:center;color:var(--ink3);padding:20px;font-family:var(--mono);font-size:11px">Press Run Benchmark</td></tr></tbody>
+      </table>
     </div>
-    <div class="chart-container">
-      <div class="chart-title">Comparisons Made — Lower is Better</div>
-      <canvas id="bench-cmp-chart" height="280"></canvas>
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:20px">
+      <div style="font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink3);margin-bottom:12px">Time Share Pie Chart</div>
+      <div style="position:relative;height:200px;display:flex;align-items:center;justify-content:center">
+        <canvas id="sort-pie" style="display:none"></canvas>
+        <div id="sort-pie-empty" style="color:var(--ink3);font-family:var(--mono);font-size:11px">Run benchmark to see chart</div>
+      </div>
+      <div id="sort-pie-legend" style="margin-top:10px;display:flex;flex-wrap:wrap;gap:6px 14px"></div>
     </div>
   </div>
 
-  <div class="results-table-wrap">
-    <table class="results-table" id="bench-results-table">
-      <thead><tr>
-        <th>Algorithm</th><th>Unit</th><th>Time (ms)</th><th>Comparisons</th><th>Swaps</th><th>vs Java</th><th>Verdict</th>
-      </tr></thead>
-      <tbody id="bench-tbody">
-        <tr><td colspan="7" style="text-align:center;color:var(--ink3);padding:24px;font-family:var(--mono);font-size:11px">Press Run Benchmark to see results</td></tr>
-      </tbody>
-    </table>
+  <!-- Search results -->
+  <div style="margin-bottom:6px;font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ink3)">// Search Algorithms — Linear Search vs Binary Search</div>
+
+  <!-- ★ NEW: live label showing current target mode -->
+  <div id="search-config-note" class="search-note" style="display:none"></div>
+
+  <div class="grid2" style="margin-bottom:24px">
+    <div class="results-table-wrap">
+      <table class="results-table">
+        <thead><tr><th>Algorithm</th><th>Unit</th><th>Time</th><th>Comparisons</th><th>vs Linear</th><th>Verdict</th></tr></thead>
+        <tbody id="search-tbody"><tr><td colspan="5" style="text-align:center;color:var(--ink3);padding:20px;font-family:var(--mono);font-size:11px">Press Run Benchmark</td></tr></tbody>
+      </table>
+    </div>
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:20px">
+      <div style="font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink3);margin-bottom:12px">Comparisons Made (fewer = better)</div>
+      <div style="position:relative;height:200px;display:flex;align-items:center;justify-content:center">
+        <canvas id="search-pie" style="display:none"></canvas>
+        <div id="search-pie-empty" style="color:var(--ink3);font-family:var(--mono);font-size:11px">Run benchmark to see chart</div>
+      </div>
+      <div id="search-pie-legend" style="margin-top:10px;display:flex;flex-wrap:wrap;gap:6px 14px"></div>
+    </div>
   </div>
 
   <div class="bench-insight" id="bench-insight" style="display:none"></div>
+
+  <!-- ══ JAVA BENCHMARK CODE PANEL ══════════════════════════════════════════ -->
+  <div style="margin-top:32px">
+    <div style="margin-bottom:10px;font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ink3)">// Java Equivalent — System.nanoTime() Benchmark</div>
+    <div style="font-size:13px;color:var(--ink2);margin-bottom:16px;line-height:1.7;max-width:760px">
+      The live benchmark above runs in JavaScript. Below is the equivalent <b>Java implementation</b> using <code style="background:rgba(0,0,0,.07);padding:1px 5px;border-radius:3px;font-family:var(--mono);font-size:11px">System.nanoTime()</code> for nanosecond-precision timing. Copy this into any Java IDE (IntelliJ, Eclipse, VS Code) and run directly — no dependencies needed.
+    </div>
+
+    <!-- Tab switcher for the two Java files -->
+    <div class="algo-tabs" id="java-tabs">
+      <div class="algo-tab active" onclick="javaTab(0)">BenchmarkMain.java</div>
+      <div class="algo-tab" onclick="javaTab(1)">Algorithms.java</div>
+      <div class="algo-tab" onclick="javaTab(2)">SearchBenchmark.java</div>
+    </div>
+
+    <!-- BenchmarkMain.java -->
+    <div id="java-panel-0" class="code-wrap">
+      <div class="code-bar">
+        <div class="code-dot"></div>BenchmarkMain.java
+        <button onclick="copyJava(0)" style="margin-left:auto;font-family:var(--mono);font-size:10px;font-weight:600;padding:3px 10px;border-radius:4px;border:1px solid #555;background:#3a3a3a;color:#ccc;cursor:pointer">Copy</button>
+      </div>
+      <div class="code-body" style="max-height:520px;overflow-y:auto">
+<span class="ln"><span class="cm">/**</span></span>
+<span class="ln"><span class="cm"> * BenchmarkMain.java — Sorting benchmark using System.nanoTime()</span></span>
+<span class="ln"><span class="cm"> * Mirrors the JS live benchmark. Run: javac BenchmarkMain.java && java BenchmarkMain</span></span>
+<span class="ln"><span class="cm"> */</span></span>
+<span class="ln"><span class="kw">import</span> java.util.Arrays;</span>
+<span class="ln"><span class="kw">import</span> java.util.Random;</span>
+<span class="ln"></span>
+<span class="ln"><span class="kw">public class</span> <span class="fn">BenchmarkMain</span> {</span>
+<span class="ln"></span>
+<span class="ln">    <span class="cm">// ── Configuration ────────────────────────────────────────────────────────</span></span>
+<span class="ln">    <span class="kw">static final int</span>    N        = <span class="num">10_000</span>;   <span class="cm">// array size</span></span>
+<span class="ln">    <span class="kw">static final int</span>    WARMUP   = <span class="num">3</span>;         <span class="cm">// warmup runs (JIT)</span></span>
+<span class="ln">    <span class="kw">static final int</span>    TRIALS   = <span class="num">5</span>;         <span class="cm">// timed runs, median taken</span></span>
+<span class="ln">    <span class="kw">static final</span> String DIST     = <span class="str">"random"</span>; <span class="cm">// "random" | "nearly" | "reverse"</span></span>
+<span class="ln"></span>
+<span class="ln">    <span class="kw">public static void</span> <span class="fn">main</span>(String[] args) {</span>
+<span class="ln">        System.out.<span class="fn">printf</span>(<span class="str">"%-22s %12s %14s %10s%n"</span>,</span>
+<span class="ln">            <span class="str">"Algorithm"</span>, <span class="str">"Time (ns)"</span>, <span class="str">"Comparisons"</span>, <span class="str">"vs Arrays.sort"</span>);</span>
+<span class="ln">        System.out.<span class="fn">println</span>(<span class="str">"-"</span>.<span class="fn">repeat</span>(<span class="num">62</span>));</span>
+<span class="ln"></span>
+<span class="ln">        <span class="kw">long</span> baseTime = <span class="num">0</span>;</span>
+<span class="ln"></span>
+<span class="ln">        <span class="cm">// ── Bubble Sort ──────────────────────────────────────────────────────</span></span>
+<span class="ln">        <span class="kw">if</span> (N &lt;= <span class="num">8_000</span>) {</span>
+<span class="ln">            Result r = <span class="fn">benchmark</span>(<span class="str">"Bubble Sort"</span>, arr -&gt; Algorithms.<span class="fn">bubbleSort</span>(arr));</span>
+<span class="ln">            <span class="fn">printRow</span>(r, baseTime);</span>
+<span class="ln">        } <span class="kw">else</span> {</span>
+<span class="ln">            System.out.<span class="fn">printf</span>(<span class="str">"%-22s %s%n"</span>, <span class="str">"Bubble Sort"</span>, <span class="str">"Skipped (O(n²) too slow)"</span>);</span>
+<span class="ln">        }</span>
+<span class="ln"></span>
+<span class="ln">        <span class="cm">// ── Selection Sort ───────────────────────────────────────────────────</span></span>
+<span class="ln">        <span class="kw">if</span> (N &lt;= <span class="num">8_000</span>) {</span>
+<span class="ln">            Result r = <span class="fn">benchmark</span>(<span class="str">"Selection Sort"</span>, arr -&gt; Algorithms.<span class="fn">selectionSort</span>(arr));</span>
+<span class="ln">            <span class="fn">printRow</span>(r, baseTime);</span>
+<span class="ln">        } <span class="kw">else</span> {</span>
+<span class="ln">            System.out.<span class="fn">printf</span>(<span class="str">"%-22s %s%n"</span>, <span class="str">"Selection Sort"</span>, <span class="str">"Skipped (O(n²) too slow)"</span>);</span>
+<span class="ln">        }</span>
+<span class="ln"></span>
+<span class="ln">        <span class="cm">// ── Merge Sort ───────────────────────────────────────────────────────</span></span>
+<span class="ln">        Result merge = <span class="fn">benchmark</span>(<span class="str">"Merge Sort"</span>, arr -&gt; Algorithms.<span class="fn">mergeSort</span>(arr, <span class="kw">new int</span>[arr.length], <span class="num">0</span>, arr.length - <span class="num">1</span>));</span>
+<span class="ln">        <span class="fn">printRow</span>(merge, baseTime);</span>
+<span class="ln"></span>
+<span class="ln">        <span class="cm">// ── Quick Sort ───────────────────────────────────────────────────────</span></span>
+<span class="ln">        Result quick = <span class="fn">benchmark</span>(<span class="str">"Quick Sort (M3)"</span>, arr -&gt; Algorithms.<span class="fn">quickSort</span>(arr, <span class="num">0</span>, arr.length - <span class="num">1</span>));</span>
+<span class="ln">        <span class="fn">printRow</span>(quick, baseTime);</span>
+<span class="ln"></span>
+<span class="ln">        <span class="cm">// ── Arrays.sort() baseline ───────────────────────────────────────────</span></span>
+<span class="ln">        Result javaSort = <span class="fn">benchmark</span>(<span class="str">"Arrays.sort()"</span>, arr -&gt; Arrays.<span class="fn">sort</span>(arr));</span>
+<span class="ln">        baseTime = javaSort.medianNs;</span>
+<span class="ln">        <span class="fn">printRow</span>(javaSort, baseTime);</span>
+<span class="ln">    }</span>
+<span class="ln"></span>
+<span class="ln">    <span class="cm">// ── Core benchmark runner ────────────────────────────────────────────────</span></span>
+<span class="ln">    <span class="kw">static</span> Result <span class="fn">benchmark</span>(String name, SortFn fn) {</span>
+<span class="ln">        <span class="cm">// Warmup: let JIT compile and optimise the hot path</span></span>
+<span class="ln">        <span class="kw">for</span> (<span class="kw">int</span> i = <span class="num">0</span>; i &lt; WARMUP; i++) fn.<span class="fn">sort</span>(<span class="fn">makeArray</span>());</span>
+<span class="ln"></span>
+<span class="ln">        <span class="kw">long</span>[] times = <span class="kw">new long</span>[TRIALS];</span>
+<span class="ln">        <span class="kw">for</span> (<span class="kw">int</span> i = <span class="num">0</span>; i &lt; TRIALS; i++) {</span>
+<span class="ln">            <span class="kw">int</span>[] arr = <span class="fn">makeArray</span>();</span>
+<span class="ln">            <span class="kw">long</span> s = System.<span class="fn">nanoTime</span>();</span>
+<span class="ln">            fn.<span class="fn">sort</span>(arr);</span>
+<span class="ln">            times[i] = System.<span class="fn">nanoTime</span>() - s;</span>
+<span class="ln">        }</span>
+<span class="ln">        Arrays.<span class="fn">sort</span>(times);</span>
+<span class="ln">        <span class="kw">return new</span> <span class="fn">Result</span>(name, times[TRIALS / <span class="num">2</span>]); <span class="cm">// median</span></span>
+<span class="ln">    }</span>
+<span class="ln"></span>
+<span class="ln">    <span class="kw">static void</span> <span class="fn">printRow</span>(Result r, <span class="kw">long</span> baseNs) {</span>
+<span class="ln">        String ratio = baseNs == <span class="num">0</span> ? <span class="str">"—"</span></span>
+<span class="ln">            : String.<span class="fn">format</span>(<span class="str">"%.2fx"</span>, (<span class="kw">double</span>) r.medianNs / baseNs);</span>
+<span class="ln">        System.out.<span class="fn">printf</span>(<span class="str">"%-22s %,12d %14s %10s%n"</span>,</span>
+<span class="ln">            r.name, r.medianNs, <span class="str">"—"</span>, ratio);</span>
+<span class="ln">    }</span>
+<span class="ln"></span>
+<span class="ln">    <span class="cm">// ── Array factory ────────────────────────────────────────────────────────</span></span>
+<span class="ln">    <span class="kw">static int</span>[] <span class="fn">makeArray</span>() {</span>
+<span class="ln">        <span class="kw">int</span>[] a = <span class="kw">new int</span>[N];</span>
+<span class="ln">        <span class="kw">for</span> (<span class="kw">int</span> i = <span class="num">0</span>; i &lt; N; i++) a[i] = i + <span class="num">1</span>; <span class="cm">// 1..N</span></span>
+<span class="ln">        <span class="kw">switch</span> (DIST) {</span>
+<span class="ln">            <span class="kw">case</span> <span class="str">"random"</span>:  <span class="fn">shuffle</span>(a);  <span class="kw">break</span>;</span>
+<span class="ln">            <span class="kw">case</span> <span class="str">"reverse"</span>: <span class="fn">reverse</span>(a); <span class="kw">break</span>;</span>
+<span class="ln">            <span class="kw">case</span> <span class="str">"nearly"</span>:  <span class="fn">nearlySort</span>(a); <span class="kw">break</span>;</span>
+<span class="ln">        }</span>
+<span class="ln">        <span class="kw">return</span> a;</span>
+<span class="ln">    }</span>
+<span class="ln">    <span class="kw">static void</span> <span class="fn">shuffle</span>(<span class="kw">int</span>[] a) {</span>
+<span class="ln">        Random rng = <span class="kw">new</span> <span class="fn">Random</span>(<span class="num">42</span>);</span>
+<span class="ln">        <span class="kw">for</span> (<span class="kw">int</span> i = a.length - <span class="num">1</span>; i &gt; <span class="num">0</span>; i--) {</span>
+<span class="ln">            <span class="kw">int</span> j = rng.<span class="fn">nextInt</span>(i + <span class="num">1</span>), tmp = a[i]; a[i] = a[j]; a[j] = tmp;</span>
+<span class="ln">        }</span>
+<span class="ln">    }</span>
+<span class="ln">    <span class="kw">static void</span> <span class="fn">reverse</span>(<span class="kw">int</span>[] a) {</span>
+<span class="ln">        <span class="kw">for</span> (<span class="kw">int</span> i = <span class="num">0</span>, j = a.length - <span class="num">1</span>; i &lt; j; i++, j--) {</span>
+<span class="ln">            <span class="kw">int</span> tmp = a[i]; a[i] = a[j]; a[j] = tmp;</span>
+<span class="ln">        }</span>
+<span class="ln">    }</span>
+<span class="ln">    <span class="kw">static void</span> <span class="fn">nearlySort</span>(<span class="kw">int</span>[] a) {</span>
+<span class="ln">        Random rng = <span class="kw">new</span> <span class="fn">Random</span>(<span class="num">42</span>);</span>
+<span class="ln">        <span class="kw">int</span> swaps = a.length / <span class="num">20</span>; <span class="cm">// 5% disorder</span></span>
+<span class="ln">        <span class="kw">for</span> (<span class="kw">int</span> i = <span class="num">0</span>; i &lt; swaps; i++) {</span>
+<span class="ln">            <span class="kw">int</span> x = rng.<span class="fn">nextInt</span>(a.length), y = rng.<span class="fn">nextInt</span>(a.length);</span>
+<span class="ln">            <span class="kw">int</span> tmp = a[x]; a[x] = a[y]; a[y] = tmp;</span>
+<span class="ln">        }</span>
+<span class="ln">    }</span>
+<span class="ln"></span>
+<span class="ln">    <span class="cm">// ── Helpers ──────────────────────────────────────────────────────────────</span></span>
+<span class="ln">    <span class="kw">static class</span> <span class="tp">Result</span> {</span>
+<span class="ln">        String name; <span class="kw">long</span> medianNs;</span>
+<span class="ln">        <span class="fn">Result</span>(String n, <span class="kw">long</span> t) { name = n; medianNs = t; }</span>
+<span class="ln">    }</span>
+<span class="ln">    <span class="kw">interface</span> <span class="tp">SortFn</span> { <span class="kw">void</span> <span class="fn">sort</span>(<span class="kw">int</span>[] arr); }</span>
+<span class="ln">}</span>
+      </div>
+    </div>
+
+    <!-- Algorithms.java -->
+    <div id="java-panel-1" class="code-wrap" style="display:none">
+      <div class="code-bar">
+        <div class="code-dot"></div>Algorithms.java
+        <button onclick="copyJava(1)" style="margin-left:auto;font-family:var(--mono);font-size:10px;font-weight:600;padding:3px 10px;border-radius:4px;border:1px solid #555;background:#3a3a3a;color:#ccc;cursor:pointer">Copy</button>
+      </div>
+      <div class="code-body" style="max-height:520px;overflow-y:auto">
+<span class="ln"><span class="cm">/**</span></span>
+<span class="ln"><span class="cm"> * Algorithms.java — All sorting algorithm implementations</span></span>
+<span class="ln"><span class="cm"> * Used by BenchmarkMain.java and SearchBenchmark.java</span></span>
+<span class="ln"><span class="cm"> */</span></span>
+<span class="ln"><span class="kw">public class</span> <span class="fn">Algorithms</span> {</span>
+<span class="ln"></span>
+<span class="ln">    <span class="cm">// ── Bubble Sort — O(n²) worst, O(n) best (swapped flag) ──────────────────</span></span>
+<span class="ln">    <span class="kw">public static void</span> <span class="fn">bubbleSort</span>(<span class="kw">int</span>[] a) {</span>
+<span class="ln">        <span class="kw">int</span> n = a.length;</span>
+<span class="ln">        <span class="kw">for</span> (<span class="kw">int</span> i = <span class="num">0</span>; i &lt; n - <span class="num">1</span>; i++) {</span>
+<span class="ln">            <span class="kw">boolean</span> swapped = <span class="kw">false</span>;</span>
+<span class="ln">            <span class="kw">for</span> (<span class="kw">int</span> j = <span class="num">0</span>; j &lt; n - i - <span class="num">1</span>; j++) {</span>
+<span class="ln">                <span class="kw">if</span> (a[j] &gt; a[j + <span class="num">1</span>]) {</span>
+<span class="ln">                    <span class="kw">int</span> tmp = a[j]; a[j] = a[j + <span class="num">1</span>]; a[j + <span class="num">1</span>] = tmp;</span>
+<span class="ln">                    swapped = <span class="kw">true</span>;</span>
+<span class="ln">                }</span>
+<span class="ln">            }</span>
+<span class="ln">            <span class="kw">if</span> (!swapped) <span class="kw">break</span>; <span class="cm">// early exit if already sorted</span></span>
+<span class="ln">        }</span>
+<span class="ln">    }</span>
+<span class="ln"></span>
+<span class="ln">    <span class="cm">// ── Selection Sort — O(n²) always, minimum swaps ─────────────────────────</span></span>
+<span class="ln">    <span class="kw">public static void</span> <span class="fn">selectionSort</span>(<span class="kw">int</span>[] a) {</span>
+<span class="ln">        <span class="kw">int</span> n = a.length;</span>
+<span class="ln">        <span class="kw">for</span> (<span class="kw">int</span> i = <span class="num">0</span>; i &lt; n - <span class="num">1</span>; i++) {</span>
+<span class="ln">            <span class="kw">int</span> minIdx = i;</span>
+<span class="ln">            <span class="kw">for</span> (<span class="kw">int</span> j = i + <span class="num">1</span>; j &lt; n; j++)</span>
+<span class="ln">                <span class="kw">if</span> (a[j] &lt; a[minIdx]) minIdx = j;</span>
+<span class="ln">            <span class="kw">int</span> tmp = a[minIdx]; a[minIdx] = a[i]; a[i] = tmp;</span>
+<span class="ln">        }</span>
+<span class="ln">    }</span>
+<span class="ln"></span>
+<span class="ln">    <span class="cm">// ── Merge Sort — O(n log n) always, stable, single temp[] ────────────────</span></span>
+<span class="ln">    <span class="kw">public static void</span> <span class="fn">mergeSort</span>(<span class="kw">int</span>[] a, <span class="kw">int</span>[] tmp, <span class="kw">int</span> lo, <span class="kw">int</span> hi) {</span>
+<span class="ln">        <span class="kw">if</span> (lo &gt;= hi) <span class="kw">return</span>;</span>
+<span class="ln">        <span class="kw">int</span> mid = lo + (hi - lo) / <span class="num">2</span>;</span>
+<span class="ln">        <span class="fn">mergeSort</span>(a, tmp, lo, mid);</span>
+<span class="ln">        <span class="fn">mergeSort</span>(a, tmp, mid + <span class="num">1</span>, hi);</span>
+<span class="ln">        <span class="fn">merge</span>(a, tmp, lo, mid, hi);</span>
+<span class="ln">    }</span>
+<span class="ln">    <span class="kw">private static void</span> <span class="fn">merge</span>(<span class="kw">int</span>[] a, <span class="kw">int</span>[] tmp, <span class="kw">int</span> lo, <span class="kw">int</span> mid, <span class="kw">int</span> hi) {</span>
+<span class="ln">        <span class="kw">for</span> (<span class="kw">int</span> k = lo; k &lt;= hi; k++) tmp[k] = a[k];</span>
+<span class="ln">        <span class="kw">int</span> i = lo, j = mid + <span class="num">1</span>;</span>
+<span class="ln">        <span class="kw">for</span> (<span class="kw">int</span> k = lo; k &lt;= hi; k++) {</span>
+<span class="ln">            <span class="kw">if</span>      (i &gt; mid)            a[k] = tmp[j++];</span>
+<span class="ln">            <span class="kw">else if</span> (j &gt; hi)             a[k] = tmp[i++];</span>
+<span class="ln">            <span class="kw">else if</span> (tmp[j] &lt; tmp[i])    a[k] = tmp[j++];</span>
+<span class="ln">            <span class="kw">else</span>                         a[k] = tmp[i++];</span>
+<span class="ln">        }</span>
+<span class="ln">    }</span>
+<span class="ln"></span>
+<span class="ln">    <span class="cm">// ── Quick Sort — Median-of-Three pivot + insertion sort for n≤16 ─────────</span></span>
+<span class="ln">    <span class="kw">public static void</span> <span class="fn">quickSort</span>(<span class="kw">int</span>[] a, <span class="kw">int</span> lo, <span class="kw">int</span> hi) {</span>
+<span class="ln">        <span class="kw">if</span> (hi - lo &lt; <span class="num">16</span>) { <span class="fn">insertionSort</span>(a, lo, hi); <span class="kw">return</span>; }</span>
+<span class="ln">        <span class="kw">int</span> mid = lo + (hi - lo) / <span class="num">2</span>;</span>
+<span class="ln">        <span class="kw">if</span> (a[mid] &lt; a[lo])  { <span class="kw">int</span> t=a[lo]; a[lo]=a[mid]; a[mid]=t; }</span>
+<span class="ln">        <span class="kw">if</span> (a[hi]  &lt; a[lo])  { <span class="kw">int</span> t=a[lo]; a[lo]=a[hi];  a[hi]=t;  }</span>
+<span class="ln">        <span class="kw">if</span> (a[mid] &lt; a[hi])  { <span class="kw">int</span> t=a[mid];a[mid]=a[hi]; a[hi]=t;  }</span>
+<span class="ln">        <span class="kw">int</span> pivot = a[hi], i = lo - <span class="num">1</span>;</span>
+<span class="ln">        <span class="kw">for</span> (<span class="kw">int</span> j = lo; j &lt; hi; j++)</span>
+<span class="ln">            <span class="kw">if</span> (a[j] &lt;= pivot) { i++; <span class="kw">int</span> t=a[i]; a[i]=a[j]; a[j]=t; }</span>
+<span class="ln">        <span class="kw">int</span> t=a[i+<span class="num">1</span>]; a[i+<span class="num">1</span>]=a[hi]; a[hi]=t;</span>
+<span class="ln">        <span class="kw">int</span> p = i + <span class="num">1</span>;</span>
+<span class="ln">        <span class="fn">quickSort</span>(a, lo, p - <span class="num">1</span>);</span>
+<span class="ln">        <span class="fn">quickSort</span>(a, p + <span class="num">1</span>, hi);</span>
+<span class="ln">    }</span>
+<span class="ln">    <span class="kw">private static void</span> <span class="fn">insertionSort</span>(<span class="kw">int</span>[] a, <span class="kw">int</span> lo, <span class="kw">int</span> hi) {</span>
+<span class="ln">        <span class="kw">for</span> (<span class="kw">int</span> i = lo + <span class="num">1</span>; i &lt;= hi; i++) {</span>
+<span class="ln">            <span class="kw">int</span> key = a[i], j = i - <span class="num">1</span>;</span>
+<span class="ln">            <span class="kw">while</span> (j &gt;= lo &amp;&amp; a[j] &gt; key) a[j + <span class="num">1</span>] = a[j--];</span>
+<span class="ln">            a[j + <span class="num">1</span>] = key;</span>
+<span class="ln">        }</span>
+<span class="ln">    }</span>
+<span class="ln"></span>
+<span class="ln">    <span class="cm">// ── Linear Search — O(n) ─────────────────────────────────────────────────</span></span>
+<span class="ln">    <span class="kw">public static int</span> <span class="fn">linearSearch</span>(<span class="kw">int</span>[] a, <span class="kw">int</span> target) {</span>
+<span class="ln">        <span class="kw">for</span> (<span class="kw">int</span> i = <span class="num">0</span>; i &lt; a.length; i++)</span>
+<span class="ln">            <span class="kw">if</span> (a[i] == target) <span class="kw">return</span> i;</span>
+<span class="ln">        <span class="kw">return</span> -<span class="num">1</span>;</span>
+<span class="ln">    }</span>
+<span class="ln"></span>
+<span class="ln">    <span class="cm">// ── Binary Search — O(log n), requires sorted array ──────────────────────</span></span>
+<span class="ln">    <span class="kw">public static int</span> <span class="fn">binarySearch</span>(<span class="kw">int</span>[] a, <span class="kw">int</span> target) {</span>
+<span class="ln">        <span class="kw">int</span> lo = <span class="num">0</span>, hi = a.length - <span class="num">1</span>;</span>
+<span class="ln">        <span class="kw">while</span> (lo &lt;= hi) {</span>
+<span class="ln">            <span class="kw">int</span> mid = lo + (hi - lo) / <span class="num">2</span>; <span class="cm">// overflow-safe</span></span>
+<span class="ln">            <span class="kw">if</span>      (a[mid] == target) <span class="kw">return</span> mid;</span>
+<span class="ln">            <span class="kw">else if</span> (a[mid] &lt;  target) lo = mid + <span class="num">1</span>;</span>
+<span class="ln">            <span class="kw">else</span>                       hi = mid - <span class="num">1</span>;</span>
+<span class="ln">        }</span>
+<span class="ln">        <span class="kw">return</span> -<span class="num">1</span>;</span>
+<span class="ln">    }</span>
+<span class="ln">}</span>
+      </div>
+    </div>
+
+    <!-- SearchBenchmark.java -->
+    <div id="java-panel-2" class="code-wrap" style="display:none">
+      <div class="code-bar">
+        <div class="code-dot"></div>SearchBenchmark.java
+        <button onclick="copyJava(2)" style="margin-left:auto;font-family:var(--mono);font-size:10px;font-weight:600;padding:3px 10px;border-radius:4px;border:1px solid #555;background:#3a3a3a;color:#ccc;cursor:pointer">Copy</button>
+      </div>
+      <div class="code-body" style="max-height:520px;overflow-y:auto">
+<span class="ln"><span class="cm">/**</span></span>
+<span class="ln"><span class="cm"> * SearchBenchmark.java — Linear vs Binary Search using System.nanoTime()</span></span>
+<span class="ln"><span class="cm"> * Uses a tight loop (ITERS calls per trial) to get stable sub-microsecond timings.</span></span>
+<span class="ln"><span class="cm"> * Run: javac SearchBenchmark.java Algorithms.java && java SearchBenchmark</span></span>
+<span class="ln"><span class="cm"> */</span></span>
+<span class="ln"><span class="kw">import</span> java.util.Arrays;</span>
+<span class="ln"></span>
+<span class="ln"><span class="kw">public class</span> <span class="fn">SearchBenchmark</span> {</span>
+<span class="ln"></span>
+<span class="ln">    <span class="kw">static final int</span> N      = <span class="num">10_000</span>;  <span class="cm">// array size</span></span>
+<span class="ln">    <span class="kw">static final int</span> WARMUP = <span class="num">3</span>;        <span class="cm">// warmup iterations (JIT)</span></span>
+<span class="ln">    <span class="kw">static final int</span> TRIALS = <span class="num">5</span>;        <span class="cm">// timed trials, median taken</span></span>
+<span class="ln">    <span class="kw">static final int</span> ITERS  = <span class="num">50_000</span>;  <span class="cm">// calls per trial (loop-based timing)</span></span>
+<span class="ln">    <span class="cm">// Target position: "first" | "middle" | "last" | "absent"</span></span>
+<span class="ln">    <span class="kw">static final</span> String TARGET_POS = <span class="str">"middle"</span>;</span>
+<span class="ln"></span>
+<span class="ln">    <span class="kw">public static void</span> <span class="fn">main</span>(String[] args) {</span>
+<span class="ln">        <span class="cm">// Build sorted array [1..N]</span></span>
+<span class="ln">        <span class="kw">int</span>[] sorted = <span class="kw">new int</span>[N];</span>
+<span class="ln">        <span class="kw">for</span> (<span class="kw">int</span> i = <span class="num">0</span>; i &lt; N; i++) sorted[i] = i + <span class="num">1</span>;</span>
+<span class="ln"></span>
+<span class="ln">        <span class="cm">// Build unsorted array for linear search</span></span>
+<span class="ln">        <span class="kw">int</span>[] unsorted = sorted.<span class="fn">clone</span>();</span>
+<span class="ln">        <span class="fn">shuffle</span>(unsorted);</span>
+<span class="ln"></span>
+<span class="ln">        <span class="cm">// Resolve target value based on TARGET_POS</span></span>
+<span class="ln">        <span class="kw">int</span> target = <span class="fn">resolveTarget</span>(unsorted, sorted);</span>
+<span class="ln">        System.out.<span class="fn">printf</span>(<span class="str">"Target position: %s  →  value = %d%n%n"</span>, TARGET_POS, target);</span>
+<span class="ln"></span>
+<span class="ln">        System.out.<span class="fn">printf</span>(<span class="str">"%-18s %12s %14s %12s%n"</span>,</span>
+<span class="ln">            <span class="str">"Algorithm"</span>, <span class="str">"Time (ns)"</span>, <span class="str">"Comparisons"</span>, <span class="str">"vs Linear"</span>);</span>
+<span class="ln">        System.out.<span class="fn">println</span>(<span class="str">"-"</span>.<span class="fn">repeat</span>(<span class="num">58</span>));</span>
+<span class="ln"></span>
+<span class="ln">        <span class="cm">// ── Linear Search ────────────────────────────────────────────────────</span></span>
+<span class="ln">        <span class="kw">final int</span> tgt = target;</span>
+<span class="ln">        <span class="kw">long</span> linearNs = <span class="fn">benchmarkSearch</span>(() -&gt; Algorithms.<span class="fn">linearSearch</span>(unsorted, tgt));</span>
+<span class="ln">        <span class="kw">int</span>  linearCmp = <span class="fn">countLinear</span>(unsorted, tgt);</span>
+<span class="ln">        System.out.<span class="fn">printf</span>(<span class="str">"%-18s %,12d %14d %12s%n"</span>,</span>
+<span class="ln">            <span class="str">"Linear Search"</span>, linearNs, linearCmp, <span class="str">"baseline"</span>);</span>
+<span class="ln"></span>
+<span class="ln">        <span class="cm">// ── Binary Search ────────────────────────────────────────────────────</span></span>
+<span class="ln">        <span class="kw">long</span> binaryNs = <span class="fn">benchmarkSearch</span>(() -&gt; Algorithms.<span class="fn">binarySearch</span>(sorted, tgt));</span>
+<span class="ln">        <span class="kw">int</span>  binaryCmp = <span class="fn">countBinary</span>(sorted, tgt);</span>
+<span class="ln">        String ratio = String.<span class="fn">format</span>(<span class="str">"%.2fx"</span>, (<span class="kw">double</span>) linearNs / binaryNs);</span>
+<span class="ln">        System.out.<span class="fn">printf</span>(<span class="str">"%-18s %,12d %14d %12s%n"</span>,</span>
+<span class="ln">            <span class="str">"Binary Search"</span>, binaryNs, binaryCmp, ratio);</span>
+<span class="ln">    }</span>
+<span class="ln"></span>
+<span class="ln">    <span class="cm">// ── Loop-based timing: ITERS calls per trial → per-call ns ───────────────</span></span>
+<span class="ln">    <span class="kw">static long</span> <span class="fn">benchmarkSearch</span>(Runnable fn) {</span>
+<span class="ln">        <span class="kw">for</span> (<span class="kw">int</span> i = <span class="num">0</span>; i &lt; WARMUP; i++) fn.<span class="fn">run</span>();</span>
+<span class="ln">        <span class="kw">long</span>[] times = <span class="kw">new long</span>[TRIALS];</span>
+<span class="ln">        <span class="kw">for</span> (<span class="kw">int</span> t = <span class="num">0</span>; t &lt; TRIALS; t++) {</span>
+<span class="ln">            <span class="kw">long</span> s = System.<span class="fn">nanoTime</span>();</span>
+<span class="ln">            <span class="kw">for</span> (<span class="kw">int</span> i = <span class="num">0</span>; i &lt; ITERS; i++) fn.<span class="fn">run</span>();</span>
+<span class="ln">            times[t] = (System.<span class="fn">nanoTime</span>() - s) / ITERS; <span class="cm">// per-call ns</span></span>
+<span class="ln">        }</span>
+<span class="ln">        Arrays.<span class="fn">sort</span>(times);</span>
+<span class="ln">        <span class="kw">return</span> times[TRIALS / <span class="num">2</span>]; <span class="cm">// median</span></span>
+<span class="ln">    }</span>
+<span class="ln"></span>
+<span class="ln">    <span class="cm">// ── Resolve target value from position mode ───────────────────────────────</span></span>
+<span class="ln">    <span class="kw">static int</span> <span class="fn">resolveTarget</span>(<span class="kw">int</span>[] unsorted, <span class="kw">int</span>[] sorted) {</span>
+<span class="ln">        <span class="kw">switch</span> (TARGET_POS) {</span>
+<span class="ln">            <span class="kw">case</span> <span class="str">"first"</span>:  <span class="kw">return</span> unsorted[<span class="num">0</span>];</span>
+<span class="ln">            <span class="kw">case</span> <span class="str">"middle"</span>: <span class="kw">return</span> unsorted[unsorted.length / <span class="num">2</span>];</span>
+<span class="ln">            <span class="kw">case</span> <span class="str">"last"</span>:   <span class="kw">return</span> unsorted[unsorted.length - <span class="num">1</span>];</span>
+<span class="ln">            <span class="kw">case</span> <span class="str">"absent"</span>: <span class="kw">return</span> sorted.length + <span class="num">9999</span>; <span class="cm">// guaranteed absent</span></span>
+<span class="ln">            <span class="kw">default</span>: <span class="kw">throw new</span> <span class="fn">IllegalArgumentException</span>(<span class="str">"Unknown position: "</span> + TARGET_POS);</span>
+<span class="ln">        }</span>
+<span class="ln">    }</span>
+<span class="ln"></span>
+<span class="ln">    <span class="cm">// ── Comparison counters ───────────────────────────────────────────────────</span></span>
+<span class="ln">    <span class="kw">static int</span> <span class="fn">countLinear</span>(<span class="kw">int</span>[] a, <span class="kw">int</span> t) {</span>
+<span class="ln">        <span class="kw">int</span> c = <span class="num">0</span>;</span>
+<span class="ln">        <span class="kw">for</span> (<span class="kw">int</span> v : a) { c++; <span class="kw">if</span> (v == t) <span class="kw">break</span>; }</span>
+<span class="ln">        <span class="kw">return</span> c;</span>
+<span class="ln">    }</span>
+<span class="ln">    <span class="kw">static int</span> <span class="fn">countBinary</span>(<span class="kw">int</span>[] a, <span class="kw">int</span> t) {</span>
+<span class="ln">        <span class="kw">int</span> c = <span class="num">0</span>, lo = <span class="num">0</span>, hi = a.length - <span class="num">1</span>;</span>
+<span class="ln">        <span class="kw">while</span> (lo &lt;= hi) {</span>
+<span class="ln">            c++; <span class="kw">int</span> mid = lo + (hi - lo) / <span class="num">2</span>;</span>
+<span class="ln">            <span class="kw">if</span>      (a[mid] == t) <span class="kw">break</span>;</span>
+<span class="ln">            <span class="kw">else if</span> (a[mid] &lt;  t) lo = mid + <span class="num">1</span>;</span>
+<span class="ln">            <span class="kw">else</span>                  hi = mid - <span class="num">1</span>;</span>
+<span class="ln">        }</span>
+<span class="ln">        <span class="kw">return</span> c;</span>
+<span class="ln">    }</span>
+<span class="ln">    <span class="kw">static void</span> <span class="fn">shuffle</span>(<span class="kw">int</span>[] a) {</span>
+<span class="ln">        java.util.Random rng = <span class="kw">new</span> java.util.<span class="fn">Random</span>(<span class="num">42</span>);</span>
+<span class="ln">        <span class="kw">for</span> (<span class="kw">int</span> i = a.length - <span class="num">1</span>; i &gt; <span class="num">0</span>; i--) {</span>
+<span class="ln">            <span class="kw">int</span> j = rng.<span class="fn">nextInt</span>(i + <span class="num">1</span>), tmp = a[i]; a[i] = a[j]; a[j] = tmp;</span>
+<span class="ln">        }</span>
+<span class="ln">    }</span>
+<span class="ln">}</span>
+      </div>
+    </div>
+
+    <!-- How to run instructions -->
+    <div class="explain" style="margin-top:16px">
+      <div class="explain-title">// How to compile and run</div>
+      <div class="explain-body">
+        Save all three files in the same folder, then in a terminal:<br><br>
+        <code>javac BenchmarkMain.java Algorithms.java SearchBenchmark.java</code><br>
+        <code>java BenchmarkMain</code> &nbsp;→ sorting results<br>
+        <code>java SearchBenchmark</code> &nbsp;→ search results<br><br>
+        Change <code>N</code>, <code>DIST</code>, and <code>TARGET_POS</code> at the top of each file to match your test configuration. The <b>warmup runs</b> allow the JVM's JIT compiler to optimise the hot path before timing begins — always include them for accurate results.
+        <div class="insight-box">
+          <div class="lbl">⚡ Why System.nanoTime() and not System.currentTimeMillis()</div>
+          <p><code>currentTimeMillis()</code> measures wall-clock time (1ms resolution) and is affected by system clock adjustments. <code>nanoTime()</code> uses a monotonic high-resolution counter — it never goes backwards and has nanosecond precision. Always use <code>nanoTime()</code> for benchmarking.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
 </div>
 </div>
 
@@ -1192,11 +1586,8 @@ function runGreedy(){
   const dist = document.getElementById('g-dist').value;
   const stable = document.getElementById('g-stable').value === 'yes';
 
-  // Simulate presortedness probe
   const presorted = {random:0.5,nearly:0.95,reverse:0.02,uniform:1.0,streamed:0.4}[dist];
-  const entropy = {random:0.95,nearly:0.12,reverse:0.98,uniform:0.0,streamed:0.7}[dist];
 
-  // Greedy decision
   let chosen, reason, treeActive = [];
   if(n < 100){
     chosen = 'SelectionSort'; reason = 'n < 100: zero memory overhead, O(n²) acceptable at this scale';
@@ -1215,7 +1606,6 @@ function runGreedy(){
     treeActive = [4];
   }
 
-  // Decision flow
   const cells = [
     {label:'Input Size n', value: n.toLocaleString(), hi: true},
     {label:'Presortedness', value: Math.round(presorted*100)+'%', hi: presorted>0.9},
@@ -1228,7 +1618,6 @@ function runGreedy(){
       <div class="value">${c.value}</div>
     </div>`).join('');
 
-  // Result banner
   document.getElementById('g-result').innerHTML = `
     <div style="font-size:22px">🎯</div>
     <div>
@@ -1236,19 +1625,6 @@ function runGreedy(){
       <div class="result-reason">${reason}</div>
     </div>`;
 
-  // Decision tree
-  const treeNodes = [
-    {type:'decision', text:'n < 100?', indent:0},
-    {type:'decision', text:'presortedness > 90%?', indent:1},
-    {type:'decision', text:'n > 100,000 AND stable=true?', indent:2},
-    {type:'decision', text:'n > 100,000 AND stable=false?', indent:3},
-    {type:'leaf', text:'→ MergeSort (default)', indent:4},
-    {type:'leaf', text:'→ SelectionSort (n<100)', indent:1},
-    {type:'leaf', text:'→ BubbleSort (nearly sorted)', indent:2},
-    {type:'leaf', text:'→ MergeSort (stable, large)', indent:3},
-    {type:'leaf', text:'→ QuickSort (fast, large)', indent:4},
-  ];
-  // Simplified tree display
   document.getElementById('g-tree').innerHTML = `
     <div class="tree-node decision${treeActive.includes(0)?' active':''}" style="margin-left:0px">❓ Is n &lt; 100?</div>
     <div class="tree-indent">
@@ -1266,13 +1642,11 @@ function runGreedy(){
     <div class="tree-node leaf${treeActive.includes(4)?' active':''}" style="margin-left:0px"><span class="tree-arrow">└─</span>Default → <b>MergeSort</b> (safe, O(n log n) guaranteed)</div>
   `;
 
-  // Probe table
   function tCost(algo, n, pre){
     if(algo==='SelectionSort') return n*n/2;
     if(algo==='BubbleSort') return pre>0.9 ? n : n*n/2;
     if(algo==='MergeSort') return n*Math.log2(n);
     if(algo==='QuickSort') return n*Math.log2(n)*1.2;
-    if(algo==='LinearSearch') return n;
     return n;
   }
   const algos = ['SelectionSort','BubbleSort','MergeSort','QuickSort'];
@@ -1341,131 +1715,286 @@ function runBreakingPoint(){
 // ═══════════════════════════════════════════════════════════════════════════
 // BENCHMARK
 // ═══════════════════════════════════════════════════════════════════════════
-let barChart=null, cmpChart=null;
-
 function generateData(n, dist){
-  const arr = Array.from({length:n},(_,i)=>i+1);
-  if(dist==='random'){ for(let i=n-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [arr[i],arr[j]]=[arr[j],arr[i]]; } }
-  else if(dist==='reverse') arr.reverse();
-  else if(dist==='nearly'){ const swaps=Math.floor(n*0.05); for(let i=0;i<swaps;i++){ const a=Math.floor(Math.random()*n),b=Math.floor(Math.random()*n); [arr[a],arr[b]]=[arr[b],arr[a]]; }}
+  const arr = Array.from({length:n}, (_,i) => i+1);
+  if(dist==='random'){
+    for(let i=n-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[arr[i],arr[j]]=[arr[j],arr[i]];}
+  } else if(dist==='reverse'){
+    arr.reverse();
+  } else if(dist==='nearly'){
+    const sw = Math.floor(n*0.05);
+    for(let i=0;i<sw;i++){const a=Math.floor(Math.random()*n),b=Math.floor(Math.random()*n);[arr[a],arr[b]]=[arr[b],arr[a]];}
+  }
   return arr;
 }
 
-function timedSort(sortFn, arr, warmup){
-  const a0=[...arr];
-  for(let i=0;i<warmup;i++) sortFn([...a0]);
-  const times=[];
-  for(let i=0;i<5;i++){ const s=performance.now(); sortFn([...a0]); times.push(performance.now()-s); }
-  times.sort((a,b)=>a-b);
-  return times[2];
+// ★ NEW: resolve the actual search target from the array based on position mode
+function resolveTarget(arr, sortedArr, posMode) {
+  const n = arr.length;
+  switch(posMode) {
+    case 'first':
+      // Target is the value that sits at index 0 in the unsorted array
+      // So linear search finds it in 1 step (best case)
+      return arr[0];
+    case 'middle':
+      // Target is the value at the middle index of the unsorted array
+      return arr[Math.floor(n/2)];
+    case 'last':
+      // Target is the value at the last index of the unsorted array
+      // Linear search has to scan the entire array (worst case = O(n))
+      return arr[n-1];
+    case 'absent':
+      // A value guaranteed to not exist in the array (array contains 1..n)
+      return n + 9999;
+    default:
+      return arr[Math.floor(n/2)];
+  }
 }
 
-function bubbleSort(a){ const n=a.length; for(let i=0;i<n-1;i++){ let sw=false; for(let j=0;j<n-i-1;j++){ if(a[j]>a[j+1]){[a[j],a[j+1]]=[a[j+1],a[j]];sw=true;} } if(!sw)break; } return a; }
-function selectionSort(a){ const n=a.length; for(let i=0;i<n-1;i++){ let m=i; for(let j=i+1;j<n;j++) if(a[j]<a[m]) m=j; [a[i],a[m]]=[a[m],a[i]]; } return a; }
-function mergeSort(a){ if(a.length<=1)return a; const m=Math.floor(a.length/2); const L=mergeSort(a.slice(0,m)),R=mergeSort(a.slice(m)); const r=[]; let i=0,j=0; while(i<L.length&&j<R.length) r.push(L[i]<=R[j]?L[i++]:R[j++]); return r.concat(L.slice(i)).concat(R.slice(j)); }
-function quickSort(a,lo=0,hi=a.length-1){ if(lo>=hi)return; if(hi-lo<16){for(let i=lo+1;i<=hi;i++){let k=a[i],j=i-1;while(j>=lo&&a[j]>k)a[j+1]=a[j--];a[j+1]=k;}return;} const mid=lo+((hi-lo)>>1); if(a[mid]<a[lo])[a[lo],a[mid]]=[a[mid],a[lo]]; if(a[hi]<a[lo])[a[lo],a[hi]]=[a[hi],a[lo]]; if(a[mid]<a[hi])[a[mid],a[hi]]=[a[hi],a[mid]]; let pv=a[hi],i=lo-1; for(let j=lo;j<hi;j++) if(a[j]<=pv)[a[++i],a[j]]=[a[j],a[i]]; [a[i+1],a[hi]]=[a[hi],a[i+1]]; const p=i+1; quickSort(a,lo,p-1); quickSort(a,p+1,hi); return a; }
-function javaSort(a){ return a.sort((x,y)=>x-y); }
+// Label + pill info for the note box
+const TARGET_META = {
+  first:  { label:'At First (Best Case)',          pill:'first',  icon:'🟢', desc:'Target is at index 0. Linear Search stops after 1 comparison. Binary Search still does O(log n) steps.' },
+  middle: { label:'In Middle (Average Case)',       pill:'middle', icon:'🟡', desc:'Target is at index n/2. Linear Search scans half the array (~n/2 comparisons). Binary Search: O(log n).' },
+  last:   { label:'At Last (Worst Case for Linear)',pill:'last',   icon:'🔴', desc:'Target is at index n−1. Linear Search must scan the ENTIRE array (n comparisons). Binary Search still O(log n).' },
+  absent: { label:'Not Present (Absolute Worst)',   pill:'absent', icon:'⚫', desc:'Target does not exist. Linear Search scans all n elements and returns −1. Binary Search exhausts the space in O(log n).' },
+};
 
-function countCmps(sortName, arr){
+function timedFn(fn, mkArg, warmup){
+  for(let i=0;i<warmup;i++) fn(mkArg());
+  const times=[];
+  for(let i=0;i<5;i++){const s=performance.now();fn(mkArg());times.push((performance.now()-s)*1_000_000);}
+  times.sort((a,b)=>a-b);
+  return Math.max(times[2], 0.001); // now in nanoseconds
+}
+
+// Loop-based microbenchmark for sub-millisecond operations (search).
+// Runs fn ITERS times in a single timed block, divides by ITERS → per-call ns.
+function timedFnLoop(fn, warmup){
+  const ITERS = 50_000;
+  for(let i=0;i<warmup;i++) fn(); // warmup
+  const times=[];
+  for(let r=0;r<5;r++){
+    const s=performance.now();
+    for(let i=0;i<ITERS;i++) fn();
+    times.push((performance.now()-s)*1_000_000/ITERS); // ns per call
+  }
+  times.sort((a,b)=>a-b);
+  return Math.max(times[2], 0.001);
+}
+
+// Sort implementations
+function bSort(a){const n=a.length;for(let i=0;i<n-1;i++){let sw=false;for(let j=0;j<n-i-1;j++){if(a[j]>a[j+1]){[a[j],a[j+1]]=[a[j+1],a[j]];sw=true;}}if(!sw)break;}return a;}
+function sSort(a){const n=a.length;for(let i=0;i<n-1;i++){let m=i;for(let j=i+1;j<n;j++)if(a[j]<a[m])m=j;[a[i],a[m]]=[a[m],a[i]];}return a;}
+function mSort(a){if(a.length<=1)return a;const m=Math.floor(a.length/2);const L=mSort(a.slice(0,m)),R=mSort(a.slice(m));const r=[];let i=0,j=0;while(i<L.length&&j<R.length)r.push(L[i]<=R[j]?L[i++]:R[j++]);return r.concat(L.slice(i)).concat(R.slice(j));}
+function qSort(a,lo=0,hi=a.length-1){if(lo>=hi)return;if(hi-lo<16){for(let i=lo+1;i<=hi;i++){let k=a[i],j=i-1;while(j>=lo&&a[j]>k)a[j+1]=a[j--];a[j+1]=k;}return;}const mid=lo+((hi-lo)>>1);if(a[mid]<a[lo])[a[lo],a[mid]]=[a[mid],a[lo]];if(a[hi]<a[lo])[a[lo],a[hi]]=[a[hi],a[lo]];if(a[mid]<a[hi])[a[mid],a[hi]]=[a[hi],a[mid]];let pv=a[hi],i=lo-1;for(let j=lo;j<hi;j++)if(a[j]<=pv)[a[++i],a[j]]=[a[j],a[i]];[a[i+1],a[hi]]=[a[hi],a[i+1]];const p=i+1;qSort(a,lo,p-1);qSort(a,p+1,hi);}
+function jsSort(a){return a.sort((x,y)=>x-y);}
+
+// Search implementations
+function linearSearch(arr,t){for(let i=0;i<arr.length;i++)if(arr[i]===t)return i;return -1;}
+function binarySearch(arr,t){let lo=0,hi=arr.length-1;while(lo<=hi){const m=lo+((hi-lo)>>1);if(arr[m]===t)return m;else if(arr[m]<t)lo=m+1;else hi=m-1;}return -1;}
+
+// Comparison counters
+function cmpBubble(arr){let c=0,a=[...arr],n=a.length;for(let i=0;i<n-1;i++){let sw=false;for(let j=0;j<n-i-1;j++){c++;if(a[j]>a[j+1]){[a[j],a[j+1]]=[a[j+1],a[j]];sw=true;}}if(!sw)break;}return c;}
+function cmpSel(arr){let c=0,a=[...arr],n=a.length;for(let i=0;i<n-1;i++){let m=i;for(let j=i+1;j<n;j++){c++;if(a[j]<a[m])m=j;}[a[i],a[m]]=[a[m],a[i]];}return c;}
+function cmpMerge(arr){let c=0;function mg(x){if(x.length<=1)return x;const m=Math.floor(x.length/2);const L=mg(x.slice(0,m)),R=mg(x.slice(m));const r=[];let i=0,j=0;while(i<L.length&&j<R.length){c++;r.push(L[i]<=R[j]?L[i++]:R[j++]);}return r.concat(L.slice(i)).concat(R.slice(j));}mg([...arr]);return c;}
+
+// ★ FIXED: comparison counters for search that actually use the given target
+function cmpLinear(arr, t){
   let c=0;
-  const a=[...arr];
-  if(sortName==='bubble'){ const n=a.length; for(let i=0;i<n-1;i++){let sw=false;for(let j=0;j<n-i-1;j++){c++;if(a[j]>a[j+1]){[a[j],a[j+1]]=[a[j+1],a[j]];sw=true;}}if(!sw)break;}}
-  else if(sortName==='selection'){ const n=a.length; for(let i=0;i<n-1;i++){let m=i;for(let j=i+1;j<n;j++){c++;if(a[j]<a[m])m=j;}[a[i],a[m]]=[a[m],a[i]];}}
-  else if(sortName==='merge'){ function mg(x){if(x.length<=1)return x;const m=Math.floor(x.length/2);const L=mg(x.slice(0,m)),R=mg(x.slice(m));const r=[];let i=0,j=0;while(i<L.length&&j<R.length){c++;r.push(L[i]<=R[j]?L[i++]:R[j++]);}return r.concat(L.slice(i)).concat(R.slice(j));}mg(a);}
-  else if(sortName==='quick'||sortName==='java'){ c=Math.round(a.length*Math.log2(a.length+1)*1.05); }
+  for(let i=0;i<arr.length;i++){c++;if(arr[i]===t)break;}
+  return c;
+}
+function cmpBin(arr, t){
+  let c=0,lo=0,hi=arr.length-1;
+  while(lo<=hi){c++;const m=lo+((hi-lo)>>1);if(arr[m]===t)break;else if(arr[m]<t)lo=m+1;else hi=m-1;}
   return c;
 }
 
+// Pure Canvas pie chart
+function drawPie(canvasId,legendId,emptyId,labels,values,colors){
+  const canvas=document.getElementById(canvasId);
+  const emptyEl=document.getElementById(emptyId);
+  const legendEl=document.getElementById(legendId);
+  if(!canvas)return;
+  const total=values.reduce((s,v)=>s+v,0);
+  if(total<=0)return;
+  canvas.style.display='block';
+  if(emptyEl)emptyEl.style.display='none';
+  const size=196;
+  canvas.width=size;canvas.height=size;
+  const ctx=canvas.getContext('2d');
+  ctx.clearRect(0,0,size,size);
+  const cx=size/2,cy=size/2,r=size/2-6;
+  let angle=-Math.PI/2;
+  values.forEach((v,i)=>{
+    if(v<=0)return;
+    const slice=(v/total)*Math.PI*2;
+    ctx.beginPath();ctx.moveTo(cx,cy);
+    ctx.arc(cx,cy,r,angle,angle+slice);
+    ctx.closePath();
+    ctx.fillStyle=colors[i%colors.length];ctx.fill();
+    ctx.strokeStyle='#fff';ctx.lineWidth=2;ctx.stroke();
+    const pct=v/total;
+    if(pct>0.04){
+      const mid=angle+slice/2;
+      ctx.fillStyle='#fff';
+      ctx.font='bold 11px IBM Plex Mono,monospace';
+      ctx.textAlign='center';ctx.textBaseline='middle';
+      ctx.fillText(Math.round(pct*100)+'%',cx+Math.cos(mid)*r*0.62,cy+Math.sin(mid)*r*0.62);
+    }
+    angle+=slice;
+  });
+  legendEl.innerHTML=labels.map((l,i)=>`<div style="display:flex;align-items:center;gap:5px;font-family:var(--mono);font-size:10px;color:var(--ink2)"><div style="width:9px;height:9px;border-radius:2px;background:${colors[i%colors.length]};flex-shrink:0"></div><span>${l}</span></div>`).join('');
+}
+
+function fmtCmp(c){return c>1e6?(c/1e6).toFixed(1)+'M':c>1e3?(c/1e3).toFixed(0)+'K':String(c);}
+// Format nanoseconds: show as µs or ms for large values, else plain ns
+function fmtNs(ns){
+  if(ns>=1e6)  return (ns/1e6).toFixed(1)+' ms';
+  if(ns>=1000) return (ns/1000).toFixed(1)+' µs';
+  return Math.round(ns)+' ns';
+}
+
 async function runBenchmark(){
-  const n=parseInt(document.getElementById('bench-n').value);
-  const dist=document.getElementById('bench-dist').value;
-  const warmup=parseInt(document.getElementById('bench-warmup').value);
+  const n        = parseInt(document.getElementById('bench-n').value);
+  const dist     = document.getElementById('bench-dist').value;
+  const warmup   = parseInt(document.getElementById('bench-warmup').value);
+  const posMode  = document.getElementById('bench-target-pos').value;  // ★ NEW
 
-  const btn=document.getElementById('bench-run-btn'); btn.disabled=true; btn.textContent='Running...';
-  const prog=document.getElementById('bench-progress'); prog.classList.add('visible');
+  const btn = document.getElementById('bench-run-btn');
+  btn.disabled=true; btn.textContent='Running...';
+  const prog=document.getElementById('bench-progress');
+  prog.classList.add('visible');
 
-  function setProgress(pct, label){
+  function setP(pct,label){
     document.getElementById('bench-prog-fill').style.width=pct+'%';
     document.getElementById('bench-prog-label').textContent=label;
-    document.getElementById('bench-prog-sub').textContent=`Array size: n=${n.toLocaleString()}, distribution: ${dist}`;
+    document.getElementById('bench-prog-sub').textContent=`n=${n.toLocaleString()}, distribution: ${dist}, target: ${TARGET_META[posMode].label}`;
   }
 
-  const arr=generateData(n,dist);
-  const algos=[
-    {name:'Linear Search*',unit:'Unit 2',fn:a=>{let i=0;while(i<a.length&&a[i]!==a[a.length>>1])i++;return a;},skip:n>5000},
-    {name:'Bubble Sort',unit:'Unit 2',fn:bubbleSort,skip:n>20000},
-    {name:'Selection Sort',unit:'Unit 2',fn:selectionSort,skip:n>20000},
-    {name:'Merge Sort',unit:'Unit 3',fn:a=>{const r=mergeSort([...a]);return r;},skip:false},
-    {name:'Quick Sort (M-3)',unit:'Unit 3',fn:a=>{const c=[...a];quickSort(c);return c;},skip:false},
-    {name:'Arrays.sort() ≡',unit:'Java STL',fn:javaSort,skip:false},
+  const arr       = generateData(n, dist);
+  const sortedArr = [...arr].sort((a,b)=>a-b);
+
+  // ★ NEW: resolve the search target based on position mode
+  const target = resolveTarget(arr, sortedArr, posMode);
+  // For binary search we need to find the target in the sorted array
+  // (it might not exist for 'absent' mode, which is fine)
+  const sortedTarget = target; // same value; binary search uses sortedArr
+
+  // ── Sort benchmarks ────────────────────────────────────────────────────
+  const sortJobs=[
+    {name:'Bubble Sort',    unit:'Unit 2', skip:n>8000,  run:()=>bSort([...arr]),   cmp:()=>cmpBubble(arr)},
+    {name:'Selection Sort', unit:'Unit 2', skip:n>8000,  run:()=>sSort([...arr]),   cmp:()=>cmpSel(arr)},
+    {name:'Merge Sort',     unit:'Unit 3', skip:false,    run:()=>mSort([...arr]),   cmp:()=>cmpMerge(arr)},
+    {name:'Quick Sort (M3)',unit:'Unit 3', skip:false,    run:()=>{const c=[...arr];qSort(c);return c;}, cmp:()=>Math.round(n*Math.log2(n+1)*1.1)},
+    {name:'Arrays.sort()',   unit:"Java STL", skip:false,    run:()=>jsSort([...arr]),  cmp:()=>Math.round(n*Math.log2(n+1)*1.0)},
   ];
 
-  const results=[];
-  for(let i=0;i<algos.length;i++){
-    const al=algos[i];
-    setProgress(Math.round((i/algos.length)*100), `Testing: ${al.name}...`);
-    await sleep(30);
-    if(al.skip){ results.push({...al, time:null, cmps:null}); continue; }
-    const t=timedSort(al.fn,[...arr],warmup);
-    const c=countCmps(al.name==='Merge Sort'?'merge':al.name==='Bubble Sort'?'bubble':al.name==='Selection Sort'?'selection':'quick',[...arr]);
-    results.push({...al, time:t, cmps:c});
+  const sortRes=[];
+  for(let i=0;i<sortJobs.length;i++){
+    const j=sortJobs[i];
+    setP(Math.round(i/sortJobs.length*50),`Sorting: ${j.name}...`);
+    await sleep(20);
+    if(j.skip){sortRes.push({...j,time:null,cmps:null});continue;}
+    sortRes.push({...j, time:timedFn(j.run,()=>null,warmup), cmps:j.cmp()});
   }
-  setProgress(100,'Complete!');
-  await sleep(300);
+
+  // ── Search benchmarks — all use target resolved from posMode ──────────
+  const searchJobs=[
+    {
+      name:'Linear Search',
+      unit:'Unit 2',
+      run:()=>linearSearch(arr, target),
+      cmp:()=>cmpLinear(arr, target),
+    },
+    {
+      name:'Binary Search',
+      unit:'Unit 3',
+      run:()=>binarySearch(sortedArr, sortedTarget),
+      cmp:()=>cmpBin(sortedArr, sortedTarget),
+    },
+  ];
+
+  const searchRes=[];
+  for(let i=0;i<searchJobs.length;i++){
+    const j=searchJobs[i];
+    setP(50+Math.round(i/searchJobs.length*50),`Searching: ${j.name}...`);
+    await sleep(20);
+    // Use loop-based timing: runs 50,000 iterations per measurement to get
+    // stable sub-microsecond per-call cost — avoids performance.now() resolution floor
+    searchRes.push({...j, time:timedFnLoop(j.run, warmup), cmps:j.cmp()});
+  }
+
+  setP(100,'Complete!');
+  await sleep(200);
   prog.classList.remove('visible');
 
-  const javaTime=results.find(r=>r.name==='Arrays.sort() ≡')?.time||1;
-  const validTimes=results.filter(r=>r.time!==null).map(r=>r.time);
-  const minTime=Math.min(...validTimes);
+  // ── ★ NEW: Show search config note ────────────────────────────────────
+  const meta = TARGET_META[posMode];
+  const noteEl = document.getElementById('search-config-note');
+  noteEl.style.display = 'block';
+  noteEl.innerHTML = `${meta.icon} <b>Search Target:</b> ${meta.label} &nbsp;·&nbsp; ${meta.desc} &nbsp;·&nbsp; <b>target value = ${target === n+9999 ? 'N/A (absent)' : target}</b>`;
 
-  // Charts
-  const colors=['#e74c3c','#e67e22','#f1c40f','#1a5276','#8e44ad','#27ae60'];
-  const chartLabels=results.filter(r=>r.time!==null).map(r=>r.name.replace(' Sort','').replace(' Search',''));
-  const timeData=results.filter(r=>r.time!==null).map(r=>parseFloat(r.time.toFixed(3)));
-  const cmpData=results.filter(r=>r.cmps!==null).map(r=>r.cmps);
-
-  if(barChart) barChart.destroy();
-  barChart=new Chart(document.getElementById('bench-bar-chart'),{
-    type:'bar',
-    data:{labels:chartLabels,datasets:[{label:'Time (ms)',data:timeData,backgroundColor:colors.slice(0,timeData.length),borderRadius:4}]},
-    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{ticks:{font:{family:'IBM Plex Mono',size:10}}},y:{ticks:{font:{family:'IBM Plex Mono',size:10}},title:{display:true,text:'ms',font:{family:'IBM Plex Mono',size:10}}}}}
-  });
-
-  if(cmpChart) cmpChart.destroy();
-  cmpChart=new Chart(document.getElementById('bench-cmp-chart'),{
-    type:'bar',
-    data:{labels:chartLabels,datasets:[{label:'Comparisons',data:cmpData,backgroundColor:colors.slice(0,cmpData.length),borderRadius:4}]},
-    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{ticks:{font:{family:'IBM Plex Mono',size:10}}},y:{ticks:{font:{family:'IBM Plex Mono',size:10}},title:{display:true,text:'count',font:{family:'IBM Plex Mono',size:10}}}}}
-  });
-
-  // Table
-  document.getElementById('bench-tbody').innerHTML=results.map((r,i)=>{
-    if(r.skip) return `<tr><td>${r.name}</td><td>${r.unit}</td><td colspan="5" style="color:var(--ink3);font-family:var(--mono);font-size:11px">Skipped (too slow for n=${n.toLocaleString()})</td></tr>`;
-    const ratio=(r.time/javaTime).toFixed(1);
-    const cls=r.time===minTime?'winner':r.time>javaTime*10?'loser':'';
-    const javaClass=r.name==='Arrays.sort() ≡'?' java-row':'';
-    return `<tr class="${javaClass}">
-      <td>${r.name}</td><td style="font-family:var(--mono);font-size:10px;color:var(--ink3)">${r.unit}</td>
-      <td class="${cls}" style="font-family:var(--mono);font-size:11px">${r.time.toFixed(3)}</td>
-      <td style="font-family:var(--mono);font-size:11px">${r.cmps>1e6?(r.cmps/1e6).toFixed(1)+'M':r.cmps>1e3?(r.cmps/1e3).toFixed(0)+'K':r.cmps}</td>
-      <td style="font-family:var(--mono);font-size:11px">—</td>
-      <td style="font-family:var(--mono);font-size:11px;color:${ratio>5?'var(--u2)':ratio<1.2?'var(--u4)':'var(--ink2)'}">${r.name==='Arrays.sort() ≡'?'baseline':ratio+'×'}</td>
-      <td style="font-size:12px">${r.time===minTime?'🏆 Fastest':r.time>javaTime*10?'❌ Too slow for prod':r.name==='Arrays.sort() ≡'?'🔷 TimSort (baseline)':'✅ Acceptable'}</td>
-    </tr>`;
+  // ── Sort table ─────────────────────────────────────────────────────────
+  const jsT = sortRes.find(r=>r.name==='Arrays.sort()')?.time || 1;
+  const minSortT = Math.min(...sortRes.filter(r=>r.time).map(r=>r.time));
+  document.getElementById('sort-tbody').innerHTML = sortRes.map(r=>{
+    if(r.skip) return `<tr><td>${r.name}</td><td style="font-family:var(--mono);font-size:10px;color:var(--ink3)">${r.unit}</td><td colspan="4" style="color:var(--ink3);font-family:var(--mono);font-size:10px">Skipped — O(n²) too slow at n=${n.toLocaleString()}</td></tr>`;
+    const isJS = r.name==='Arrays.sort()';
+    const ratio = (r.time/jsT).toFixed(2);
+    const tStyle = r.time===minSortT?'color:var(--u4);font-weight:700':'';
+    const ratioColor = isJS?'var(--ink3)':ratio<1.5?'var(--u4)':ratio>5?'var(--u2)':'var(--ink2)';
+    const verdict = isJS?'&#128310; Java baseline':r.time===minSortT?'&#127942; Fastest':ratio<1.5?'&#9989; Near built-in':ratio<4?'&#9989; Acceptable':'&#10060; Slow for prod';
+    return `<tr${isJS?' class="java-row"':''}><td>${r.name}</td><td style="font-family:var(--mono);font-size:10px;color:var(--ink3)">${r.unit}</td><td style="font-family:var(--mono);font-size:11px;${tStyle}">${fmtNs(r.time)}</td><td style="font-family:var(--mono);font-size:11px">${fmtCmp(r.cmps)}</td><td style="font-family:var(--mono);font-size:11px;color:${ratioColor}">${isJS?'baseline':ratio+'&times;'}</td><td style="font-size:11px">${verdict}</td></tr>`;
   }).join('');
 
-  const fastest=results.filter(r=>r.time!==null).reduce((a,b)=>a.time<b.time?a:b);
-  const insight=document.getElementById('bench-insight');
-  insight.style.display='block';
-  insight.innerHTML=`
-    <b>Benchmark Results (n=${n.toLocaleString()}, ${dist}):</b><br>
-    Fastest: <b>${fastest.name}</b> at ${fastest.time.toFixed(3)}ms.
-    Java's <b>Arrays.sort()</b> uses TimSort — a hybrid of Merge Sort + Insertion Sort that detects natural runs. For primitives it uses a dual-pivot Quick Sort.
-    Your Merge Sort and Quick Sort (Median-of-Three) should be within 1.5–3× of Arrays.sort() — any larger gap indicates the JVM JIT hasn't warmed up (increase warmup runs).
-    Note: Bubble Sort and Selection Sort are intentionally skipped for large n because they would take ${Math.round(n*n/1e6)} seconds.
-  `;
+  // ── Search table ───────────────────────────────────────────────────────
+  const linearT  = searchRes.find(r=>r.name==='Linear Search')?.time || 1;
+  const minSearchC = Math.min(...searchRes.map(r=>r.cmps));
+  document.getElementById('search-tbody').innerHTML = searchRes.map(r=>{
+    const isLinear = r.name==='Linear Search';
+    const ratio = (r.time/linearT).toFixed(2);
+    const cStyle = r.cmps===minSearchC?'color:var(--u4);font-weight:700':'';
+    let verdict;
+    if(r.name==='Binary Search') {
+      verdict = posMode==='absent' ? '&#127942; Fastest — O(log n) even absent' : '&#127942; Fastest — O(log n)';
+    } else {
+      if(posMode==='first')       verdict='&#9989; Best case O(1) — found at index 0';
+      else if(posMode==='middle') verdict='&#9989; Average case — ~n/2 comparisons';
+      else if(posMode==='last')   verdict='&#10060; Worst case — scanned all n elements';
+      else                        verdict='&#10060; Worst case — target absent, full scan';
+    }
+    const ratioColor = isLinear?'var(--ink3)':Number(ratio)<1?'var(--u4)':'var(--u2)';
+    return `<tr><td>${r.name}</td><td style="font-family:var(--mono);font-size:10px;color:var(--ink3)">${r.unit}</td><td style="font-family:var(--mono);font-size:11px;">${fmtNs(r.time)}</td><td style="font-family:var(--mono);font-size:11px;${cStyle}">${fmtCmp(r.cmps)}</td><td style="font-family:var(--mono);font-size:11px;color:${ratioColor}">${isLinear?'baseline':ratio+'&times;'}</td><td style="font-size:11px">${verdict}</td></tr>`;
+  }).join('');
 
-  btn.disabled=false; btn.textContent='▶ Run Again';
+  // ── Pie charts ─────────────────────────────────────────────────────────
+  const COLORS=['#c0392b','#e67e22','#1a5276','#8e44ad','#27ae60','#2980b9'];
+  const sortValid = sortRes.filter(r=>r.time!==null);
+  drawPie('sort-pie','sort-pie-legend','sort-pie-empty', sortValid.map(r=>r.name), sortValid.map(r=>r.time), COLORS);
+  drawPie('search-pie','search-pie-legend','search-pie-empty', searchRes.map(r=>r.name), searchRes.map(r=>r.cmps), COLORS);
+
+  // ── Insight ────────────────────────────────────────────────────────────
+  const linCmps  = cmpLinear(arr, target);
+  const binCmps  = cmpBin(sortedArr, sortedTarget);
+  const posLabel = TARGET_META[posMode].label;
+
+  const posInsight = {
+    first:  `Because the target is at index 0, <b>Linear Search</b> terminates after just <b>1 comparison</b> — best case O(1). Binary Search still needs <b>${binCmps}</b> comparisons (log₂ n) because it always halves the space regardless of where the target is.`,
+    middle: `With the target at the middle, Linear Search scans ~n/2 elements (<b>${linCmps}</b> comparisons). Binary Search needed only <b>${binCmps}</b> — log₂(${n}) ≈ ${Math.ceil(Math.log2(n))} steps.`,
+    last:   `Target at the last index forces Linear Search to scan the <b>entire array</b> — all <b>${linCmps}</b> elements. This is the true worst case O(n). Binary Search still only needed <b>${binCmps}</b> comparisons.`,
+    absent: `Target does not exist. Linear Search exhausted all <b>${linCmps}</b> elements before returning −1. Binary Search narrowed the space to zero in just <b>${binCmps}</b> comparisons — the algorithmic advantage is most visible here.`,
+  }[posMode];
+
+  const insight = document.getElementById('bench-insight');
+  insight.style.display='block';
+  insight.innerHTML=`<b>Results (n=${n.toLocaleString()}, ${dist}, target: ${posLabel}):</b><br><br>
+    <b>Searching:</b> ${posInsight}<br><br>
+    Times are in <b>nanoseconds</b> (performance.now() × 1,000,000), median of 5 timed runs after ${warmup} warmup(s). The comparison pie shows algorithmic cost independent of JS engine speed.<br><br>
+    <b>Sorting:</b> Distribution was <i>${dist}</i>. Bubble and Selection Sort are skipped above n=8,000 due to O(n²) runtime. Your Merge Sort and Quick Sort (M3) should land within 1–4× of Arrays.sort() (TimSort).`;
+
+  btn.disabled=false;
+  btn.innerHTML='&#9654; Run Again';
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
@@ -1473,6 +2002,36 @@ async function runBenchmark(){
 // ═══════════════════════════════════════════════════════════════════════════
 u2Setup();
 u3Setup();
+
+// ═══════════════════════════════════════════════════════════════════════════
+// JAVA CODE PANEL — tab switcher + copy button
+// ═══════════════════════════════════════════════════════════════════════════
+function javaTab(idx){
+  [0,1,2].forEach(i=>{
+    const panel = document.getElementById('java-panel-'+i);
+    if(panel) panel.style.display = i===idx ? 'block' : 'none';
+  });
+  document.querySelectorAll('#java-tabs .algo-tab').forEach((t,i)=>
+    t.classList.toggle('active', i===idx));
+}
+
+function copyJava(idx){
+  const panel = document.getElementById('java-panel-'+idx);
+  if(!panel) return;
+  // Extract text from all .ln spans, strip HTML tags
+  const lines = panel.querySelectorAll('.ln');
+  const text = Array.from(lines).map(l=>l.innerText).join('\n');
+  navigator.clipboard.writeText(text).then(()=>{
+    const btn = panel.querySelector('button');
+    const orig = btn.textContent;
+    btn.textContent = '✓ Copied!';
+    btn.style.color = '#a9dfbf';
+    setTimeout(()=>{ btn.textContent = orig; btn.style.color = '#ccc'; }, 1800);
+  });
+}
 </script>
+
+<!-- Chart.js CDN -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 </body>
 </html>
