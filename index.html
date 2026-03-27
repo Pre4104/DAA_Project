@@ -1066,11 +1066,7 @@ input[type=range]{accent-color:var(--ink);width:70px;cursor:pointer}
         <code>javac BenchmarkMain.java Algorithms.java SearchBenchmark.java</code><br>
         <code>java BenchmarkMain</code> &nbsp;→ sorting results<br>
         <code>java SearchBenchmark</code> &nbsp;→ search results<br><br>
-        Change <code>N</code>, <code>DIST</code>, and <code>TARGET_POS</code> at the top of each file to match your test configuration. The <b>warmup runs</b> allow the JVM's JIT compiler to optimise the hot path before timing begins — always include them for accurate results.
-        <div class="insight-box">
-          <div class="lbl">⚡ Why System.nanoTime() and not System.currentTimeMillis()</div>
-          <p><code>currentTimeMillis()</code> measures wall-clock time (1ms resolution) and is affected by system clock adjustments. <code>nanoTime()</code> uses a monotonic high-resolution counter — it never goes backwards and has nanosecond precision. Always use <code>nanoTime()</code> for benchmarking.</p>
-        </div>
+        Change <code>N</code>, <code>DIST</code>, and <code>TARGET_POS</code> at the top of each file to match your test configuration. The <b>warmup runs</b> allow the JVM's JIT compiler to optimise the hot path before timing begins.
       </div>
     </div>
   </div>
