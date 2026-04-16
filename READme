@@ -1,0 +1,47 @@
+# DAA Complete System — Interactive Algorithm Visualizer
+
+A single-file interactive web application covering all five units of Design and Analysis of Algorithms. Built with vanilla HTML, CSS, and JavaScript — no frameworks, no build tools, no dependencies.
+
+## Live Demo
+Open `daa-system.html` directly in any modern browser. No server required.
+
+## What's Inside
+
+### Unit 2 — Brute Force
+- **Linear Search** — O(n) scan with early exit
+- **Bubble Sort** — O(n²) with swapped-flag early exit optimization (O(n) best case)
+- **Selection Sort** — O(n²) always, minimum n−1 swaps
+
+### Unit 3 — Divide & Conquer
+- **Binary Search** — O(log n), overflow-safe mid formula
+- **Merge Sort** — O(n log n) stable, single temp[] allocation (no GC storms)
+- **Quick Sort** — O(n log n) avg, Median-of-Three pivot + Insertion Sort hybrid for n≤16
+
+### Unit 4 — Greedy Strategy
+- **Adaptive Algorithm Selector** — a greedy meta-algorithm that probes O(√n) samples,
+  computes presortedness and entropy, then greedily selects the optimal sorter.
+  Demonstrates the Greedy Choice Property: local optimal = global optimal for this problem class.
+
+### Unit 5 — Limitation Analysis & NP-Hardness
+- Algorithm breakdown cards (worst cases, memory limits, engineering fixes)
+- **Breaking Point Simulator** — visual chart showing where naive Quick Sort degrades vs.
+  the optimized version across n = 100 to 1,000,000
+- Complexity comparison table (all 6 algorithms + Java's TimSort)
+- P vs NP vs NP-Hard classification
+
+### Benchmark
+- Runs all algorithms in-browser against `Array.prototype.sort()` (TimSort equivalent)
+- Methodology: warmup runs + median of 5 timed trials + `performance.now()` at nanosecond precision
+- Separate sorting and searching benchmarks
+- Configurable: array size, distribution (random/nearly-sorted/reverse), warmup count, target position
+- Pie charts showing time share and comparison counts independently
+
+## Design Highlights
+- **Zero dependencies** — Chart.js from CDN, everything else is native
+- **Data-driven rendering** — algorithm data is plain objects; renderers are generic
+- **Cooperative async animation** — `async/await` + `sleep()` yields to the browser event loop
+- **Synchronized highlighting** — step cards and code lines highlight together
+- **CSS design system** — all colors and themes are CSS custom properties
+- **Statistically rigorous benchmark** — median-of-5, separate warmup, nanosecond precision
+
+## Usage
