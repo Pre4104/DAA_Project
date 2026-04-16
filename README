@@ -5,6 +5,8 @@ A single-file interactive web application covering all five units of Design and 
 ## Live Demo
 Open `daa-system.html` directly in any modern browser. No server required.
 
+---
+
 ## What's Inside
 
 ### Unit 2 — Brute Force
@@ -36,6 +38,8 @@ Open `daa-system.html` directly in any modern browser. No server required.
 - Configurable: array size, distribution (random/nearly-sorted/reverse), warmup count, target position
 - Pie charts showing time share and comparison counts independently
 
+---
+
 ## Design Highlights
 - **Zero dependencies** — Chart.js from CDN, everything else is native
 - **Data-driven rendering** — algorithm data is plain objects; renderers are generic
@@ -44,4 +48,69 @@ Open `daa-system.html` directly in any modern browser. No server required.
 - **CSS design system** — all colors and themes are CSS custom properties
 - **Statistically rigorous benchmark** — median-of-5, separate warmup, nanosecond precision
 
+---
+
 ## Usage
+
+### Requirements
+- Any modern browser (Chrome, Firefox, Edge, Safari)
+- No installations, no server, no internet required after page load
+
+### Steps
+
+```bash
+# Clone the repository
+git clone https://github.com/YOUR_USERNAME/daa-complete-system.git
+
+# Navigate into the folder
+cd daa-complete-system
+
+# Open directly in your browser
+open daa-system.html        # macOS
+start daa-system.html       # Windows
+xdg-open daa-system.html    # Linux
+```
+
+Or simply double-click `daa-system.html` in your file explorer.
+
+---
+
+## Project Structure
+daa-complete-system/
+└── daa-system.html    
+└── README.md
+└── .gitignore
+└── license
+
+---
+
+## Algorithms Covered
+
+| Algorithm | Unit | Best | Average | Worst | Space | Stable |
+|---|---|---|---|---|---|---|
+| Linear Search | 2 | O(1) | O(n) | O(n) | O(1) | — |
+| Bubble Sort | 2 | O(n) | O(n²) | O(n²) | O(1) | ✓ |
+| Selection Sort | 2 | O(n²) | O(n²) | O(n²) | O(1) | ✗ |
+| Binary Search | 3 | O(1) | O(log n) | O(log n) | O(1) | — |
+| Merge Sort | 3 | O(n log n) | O(n log n) | O(n log n) | O(n) | ✓ |
+| Quick Sort* | 3 | O(n log n) | O(n log n) | O(n²) | O(log n) | ✗ |
+
+*Quick Sort uses Median-of-Three pivot. Naive first-element pivot degrades to O(n²) on sorted/reverse-sorted data.
+
+---
+
+## Tech Stack
+- **Language:** HTML5 / CSS3 / Vanilla JavaScript (ES2020)
+- **Charts:** Chart.js 4.4.1 (CDN)
+- **Fonts:** IBM Plex Mono, DM Sans (Google Fonts)
+- **Java implementations:** included as syntax-highlighted code panels with copy buttons
+
+---
+
+## Author
+**B S Lakshmi Prerana** 
+---
+
+## Disclaimer
+Built for academic purposes as part of a DAA university project. All algorithm implementations
+are for educational visualization and are not intended for production use.
